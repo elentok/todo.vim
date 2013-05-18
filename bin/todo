@@ -22,7 +22,13 @@ main() {
 }
 
 keywords() {
-  awk 'match($0, /[@\+][a-zA-Z0-9-]+/, ary) { print ary[0] }' $TODO_FILE | sort | uniq
+  awk '{ split($0, words, " "); 
+    for (i in words) { 
+      if (match(words[i], "^[@\\+]") > 0) { 
+        print words[i]; 
+      }
+    }
+  }' $TODO_FILE | sort | uniq
 }
 
 filter() {
@@ -37,18 +43,6 @@ create_awk_pattern() {
   pattern="${pattern// // && /}"
   pattern="${pattern//+/\\+}"
   echo "/$pattern/"
-}
-
-multi_grep() {
-  cat $TODO_FILE | for word in $*; do
-    grep "${word/+/\\+}"
-  done
-}
-
-multi_inverse_grep() {
-  for word in $*; do
-    grep -v "${word/+/\\+}"
-  done
 }
 
 merge() {
