@@ -9,6 +9,7 @@ let s:plugin_root = expand("<sfile>:p:h") . '/../'
 let s:todo_bin = s:plugin_root . 'bin/todo'
 
 func! todo#open(filter)
+  let g:todo_filter = a:filter
   if a:filter == ''
     exec "edit " . g:todo_root . "/todo.txt"
   else
