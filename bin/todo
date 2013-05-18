@@ -1,0 +1,61 @@
+#!/bin/bash
+
+TODO_ROOT="$HOME/Dropbox/todo"
+TODO_FILE="$TODO_ROOT/todo.txt"
+TODO_FILTERED="$TODO_ROOT/.todo.filtered.txt"
+TODO_UNFILTERED="$TODO_ROOT/.todo.unfiltered.txt"
+
+main() {
+  command=$1
+  shift
+  case $command in
+    "keywords" )
+      keywords
+      ;;
+    "filter" )
+      filter $*
+      ;;
+    "merge" )
+      merge
+      ;;
+  esac
+}
+
+keywords() {
+  awk 'match($0, /[@\+][a-zA-Z0-9-]+/, ary) { print ary[0] }' $TODO_FILE | sort | uniq
+}
+
+filter() {
+  echo ">>> Filtered by '$*'" > $TODO_FILTERED
+  pattern=$(create_awk_pattern $*)
+  awk "$pattern" $TODO_FILE >> $TODO_FILTERED
+  awk "!($pattern)" $TODO_FILE > $TODO_UNFILTERED
+}
+
+create_awk_pattern() {
+  pattern="$*"
+  pattern="${pattern// // && /}"
+  pattern="${pattern//+/\\+}"
+  echo "/$pattern/"
+}
+
+multi_grep() {
+  cat $TODO_FILE | for word in $*; do
+    grep "${word/+/\\+}"
+  done
+}
+
+multi_inverse_grep() {
+  for word in $*; do
+    grep -v "${word/+/\\+}"
+  done
+}
+
+merge() {
+  (
+    grep -v '^>>>' $TODO_FILTERED
+    cat $TODO_UNFILTERED
+  ) | sort > $TODO_FILE
+}
+
+main $*

@@ -58,3 +58,5 @@ func! RenderStatusLine(done)
     redr
   endif
 endfunc
+
+autocmd BufWritePost .todo.filtered.txt call todo#merge()
