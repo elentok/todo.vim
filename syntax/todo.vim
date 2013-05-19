@@ -9,7 +9,9 @@ if exists("b:current_syntax")
     finish
 endif
 
-syntax  match  TodoDone       '^[xX]\s.\+$'              contains=TodoDate,TodoProject,TodoContext
+"syntax  match  TodoDone       '^[xX]\s.\+$'              contains=TodoDate,TodoProject,TodoContext
+syntax  match  TodoDone       '^[xX]\s.\+$'
+syntax  match  TodoAttachment '\[.\+\]'
 syntax  match  TodoPriorityA  '^([aA])\s.\+$'            contains=TodoDate,TodoProject,TodoContext
 syntax  match  TodoPriorityB  '^([bB])\s.\+$'            contains=TodoDate,TodoProject,TodoContext
 syntax  match  TodoPriorityC  '^([cC])\s.\+$'            contains=TodoDate,TodoProject,TodoContext
@@ -42,6 +44,7 @@ syntax  match  TodoContext    '@\w\+'                    contains=NONE
 
 " Other priority colours might be defined by the user
 highlight  default  link  TodoDone       Comment
+highlight  default  link  TodoAttachment Comment
 highlight  default  link  TodoPriorityA  Constant
 highlight  default  link  TodoPriorityB  Statement
 highlight  default  link  TodoPriorityC  Identifier

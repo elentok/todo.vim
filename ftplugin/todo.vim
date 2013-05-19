@@ -5,7 +5,24 @@ noremap <buffer> o o<c-r>=strftime('%Y-%m-%d')<cr> <c-r>=g:todo_filter<cr>
 noremap <buffer> O O<c-r>=strftime('%Y-%m-%d')<cr> <c-r>=g:todo_filter<cr> 
 inoremap <buffer> <cr> <cr><c-r>=strftime('%Y-%m-%d')<cr> <c-r>=g:todo_filter<cr>
 
-func! todo#navigate()
+
+func! todo#execute()
+  if !todo#open_attachment()
+    call todo#navigate_to_url()
+  endif
+endfunc
+
+func! todo#open_attachment()
+  let attachment = matchstr(getline('.'), '\v\[(.+)\]')
+  if attachment == ''
+    return 0
+  else
+    let attachment = strpart(attachment, 1, strlen(attachment) - 2)
+    call system('open "' . attachment . '"')
+  endif
+endfunc
+
+func! todo#navigate_to_url()
   let url = matchstr(getline('.'), '\vhttps?[^ ]+')
   echo url
   if url != ''
@@ -21,4 +38,4 @@ func! todo#toggle_complete()
   endif
 endfunc
 
-noremap <buffer> ,gu :call todo#navigate()<cr>
+noremap <buffer> \\ :call todo#execute()<cr>
