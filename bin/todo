@@ -36,8 +36,13 @@ keywords() {
 filter() {
   echo ">>> Filtered by '$*'" > $TODO_FILTERED
   pattern=$(create_awk_pattern $*)
-  awk "$pattern" $TODO_FILE >> $TODO_FILTERED
-  awk "!($pattern)" $TODO_FILE > $TODO_UNFILTERED
+  awk "{
+    if ($pattern) {
+      print >> \"$TODO_FILTERED\"
+    } else {
+      print > \"$TODO_UNFILTERED\"
+    }
+  }" $TODO_FILE
 }
 
 create_awk_pattern() {
