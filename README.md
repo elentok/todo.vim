@@ -66,6 +66,11 @@ When editing:
 * `\\` - opens the link in the current task (either http://... or [/path/to/local/file]),
   uses `g:todo_open_command` (defaults to `open`).
 
+Configuration
+-------------
+
+* `g:todo_root` - the location of the todo.txt file (defaults to "~/Dropbox/todo")
+* `g:todo_open_command` - the location of the 'open' command (defaults to "open")
 
 Todo
 -----
