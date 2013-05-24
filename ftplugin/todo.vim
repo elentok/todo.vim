@@ -4,6 +4,7 @@ nnoremap <buffer> = :call todo#toggle_complete()<cr>
 noremap <buffer> o o<c-r>=strftime('%Y-%m-%d')<cr> <c-r>=g:todo_filter<cr> 
 noremap <buffer> O O<c-r>=strftime('%Y-%m-%d')<cr> <c-r>=g:todo_filter<cr> 
 inoremap <buffer> <cr> <cr><c-r>=strftime('%Y-%m-%d')<cr> <c-r>=g:todo_filter<cr>
+noremap <buffer> \\ :call todo#execute()<cr>
 
 
 func! todo#execute()
@@ -18,7 +19,7 @@ func! todo#open_attachment()
     return 0
   else
     let attachment = strpart(attachment, 1, strlen(attachment) - 2)
-    call system('open "' . attachment . '"')
+    call system(g:todo_open_command . ' "' . attachment . '"')
   endif
 endfunc
 
@@ -38,4 +39,3 @@ func! todo#toggle_complete()
   endif
 endfunc
 
-noremap <buffer> \\ :call todo#execute()<cr>
