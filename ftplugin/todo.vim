@@ -20,11 +20,12 @@ func! todo#open_attachment()
   else
     let attachment = strpart(attachment, 1, strlen(attachment) - 2)
     call system(g:todo_open_command . ' "' . attachment . '"')
+    return 1
   endif
 endfunc
 
 func! todo#navigate_to_url()
-  let url = matchstr(getline('.'), '\vhttps?[^ ]+')
+  let url = matchstr(getline('.'), '\vhttps?[^ )\]]+')
   echo url
   if url != ''
     call system('open "' . url . '"')
