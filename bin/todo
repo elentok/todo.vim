@@ -25,7 +25,9 @@ keywords() {
   awk '{ split($0, words, " "); 
     for (i in words) { 
       if (match(words[i], "^[@\\+]") > 0) { 
-        print words[i]; 
+        word = words[i]
+        gsub(/:$/, "", word);
+        print word;
       }
     }
   }' $TODO_FILE | sort | uniq
