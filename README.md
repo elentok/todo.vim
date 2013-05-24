@@ -1,6 +1,8 @@
 Todo.txt Vim Plugin
 ====================
 
+Take a look at the [screencast](http://youtu.be/QYfutWIx3Ek) to see how it works.
+
 Why did I write this plugin?
 -----------------------------
 
