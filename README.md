@@ -45,6 +45,7 @@ Features
 * Syntax highlighting.
 * Toggle task completion.
 * It's standalone, doesn't require todo.sh.
+* Before merging a filtered view it checks if todo.txt has changed.
 
 
 Installation
@@ -76,7 +77,6 @@ Configuration
 
 Todo
 -----
-* When merging filtered view, check if the todo.txt has changed.
-* Auto archive
+* archive complete tasks
 * Support future tasks (t:...) in filter
 
