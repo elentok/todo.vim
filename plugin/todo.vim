@@ -1,6 +1,7 @@
 " Configuration {{{1
 if !exists('g:todo_root')
   let g:todo_root=expand("~/Dropbox/todo")
+  let $TODO_ROOT=g:todo_root
 endif
 
 if !exists('g:todo_open_command')
@@ -20,7 +21,7 @@ func! todo#open(filter)
     exec "edit " . g:todo_root . "/todo.txt"
   else
     call system(s:todo_bin . " filter " . a:filter)
-    exec "edit " . g:todo_root . "/.todo.filtered.txt"
+    exec "edit " . expand("~/.todo/todo.filtered.txt")
   endif
 endfunc
 
@@ -68,4 +69,13 @@ endfunc
 " Commands {{{1
 command! -complete=custom,todo#get_keywords -nargs=* Todo call todo#open(<q-args>)
 
+" Auto Commands {{{1
+
+augroup TodoVIM
+  autocmd!
+  autocmd BufWritePost todo.filtered.txt call todo#merge()
+augroup END
+
+
 " vim: foldmethod=marker
+"

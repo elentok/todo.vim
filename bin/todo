@@ -1,9 +1,15 @@
 #!/bin/bash
 
-TODO_ROOT="$HOME/Dropbox/todo"
+if [ "$TODO_ROOT" == "" ]; then
+  TODO_ROOT="$HOME/Dropbox/todo"
+fi
+
+TODO_TEMP="$HOME/.todo"
+test ! -e $TODO_TEMP && mkdir $TODO_TEMP
+
 TODO_FILE="$TODO_ROOT/todo.txt"
-TODO_FILTERED="$TODO_ROOT/.todo.filtered.txt"
-TODO_UNFILTERED="$TODO_ROOT/.todo.unfiltered.txt"
+TODO_FILTERED="$TODO_TEMP/todo.filtered.txt"
+TODO_UNFILTERED="$TODO_TEMP/todo.unfiltered.txt"
 
 main() {
   command=$1

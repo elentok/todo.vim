@@ -1,5 +1,3 @@
-autocmd BufWritePost .todo.filtered.txt call todo#merge()
-
 nnoremap <buffer> = :call todo#toggle_complete()<cr>
 noremap <buffer> o o<c-r>=strftime('%Y-%m-%d')<cr> <c-r>=g:todo_filter<cr> 
 noremap <buffer> O O<c-r>=strftime('%Y-%m-%d')<cr> <c-r>=g:todo_filter<cr> 
