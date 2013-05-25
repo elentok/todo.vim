@@ -10,6 +10,7 @@ test ! -e $TODO_TEMP && mkdir $TODO_TEMP
 TODO_FILE="$TODO_ROOT/todo.txt"
 TODO_FILTERED="$TODO_TEMP/todo.filtered.txt"
 TODO_UNFILTERED="$TODO_TEMP/todo.unfiltered.txt"
+TODO_CHECKSUM="$TODO_TEMP/checksum"
 
 main() {
   command=$1
@@ -23,6 +24,9 @@ main() {
       ;;
     "merge" )
       merge
+      ;;
+    "has_changed" )
+      has_changed
       ;;
   esac
 }
@@ -40,6 +44,7 @@ keywords() {
 }
 
 filter() {
+  create_checksum
   echo ">>> Filtered by '$*'" > $TODO_FILTERED
   pattern=$(create_awk_pattern $*)
   awk "{
@@ -49,6 +54,10 @@ filter() {
       print > \"$TODO_UNFILTERED\"
     }
   }" $TODO_FILE
+}
+
+create_checksum() {
+  md5 -q $TODO_FILE > $TODO_CHECKSUM
 }
 
 create_awk_pattern() {
@@ -63,6 +72,23 @@ merge() {
     grep -v '^>>>' $TODO_FILTERED
     cat $TODO_UNFILTERED
   ) | sort > $TODO_FILE
+  create_checksum
+}
+
+has_changed() {
+  if [ ! -e "$TODO_CHECKSUM" ]; then
+    echo "no"
+    exit 0
+  fi
+  actual_checksum=$(cat $TODO_CHECKSUM)
+  expected_checksum=$(md5 -q $TODO_FILE)
+  if [ "$actual_checksum" == "$expected_checksum" ]; then
+    echo "no"
+    exit 0
+  else
+    echo "yes"
+    exit 1
+  fi
 }
 
 main $*

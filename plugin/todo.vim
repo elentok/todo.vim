@@ -26,7 +26,24 @@ func! todo#open(filter)
 endfunc
 
 func! todo#merge()
+  if todo#has_changed()
+    let choice = confirm(
+      \ "todo.txt has changed",
+      \ "&Overwrite it\n&Lose local changes\n&Cancel")
+    
+    if choice == 3
+      return
+    elseif choice == 2
+      call todo#open(g:todo_filter)
+      set filetype=todo
+      return
+    end
+  end
   call system(s:todo_bin . " merge")
+endfunc
+
+func! todo#has_changed()
+  return system(s:todo_bin . " has_changed") =~ 'yes'
 endfunc
 
 func! todo#get_keywords(argLead, cmdLine, curPos)
