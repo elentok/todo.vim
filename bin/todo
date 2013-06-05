@@ -62,9 +62,10 @@ create_checksum() {
 
 create_awk_pattern() {
   pattern="$*"
-  pattern="${pattern// // && /}"
-  pattern="${pattern//+/\\+}"
-  echo "/$pattern/"
+  pattern="${pattern// //) && (/}"
+  pattern="${pattern///-/!/}"
+  pattern="${pattern//\+/\\+}"
+  echo "(/$pattern/)"
 }
 
 merge() {
