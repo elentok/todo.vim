@@ -1,8 +1,11 @@
 " Configuration {{{1
-if !exists('g:todo_root')
+if exists('g:todo_root')
+  let g:todo_root=expand(g:todo_root)
+else
   let g:todo_root=expand("~/Dropbox/todo")
-  let $TODO_ROOT=g:todo_root
 endif
+
+let $TODO_ROOT=g:todo_root
 
 if !exists('g:todo_open_command')
   let g:todo_open_command='open'
