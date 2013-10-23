@@ -11,7 +11,9 @@ if !exists('g:todo_open_command')
   let g:todo_open_command='open'
 endif
 
-let g:todo_filter = ''
+if !exists('g:todo_filter')
+  let g:todo_filter = ''
+endif
 
 let s:plugin_root = expand("<sfile>:p:h") . '/../'
 let s:todo_bin = s:plugin_root . 'bin/todo'
@@ -84,6 +86,14 @@ func! todo#toggle_complete()
   else
     exec "s/^/x " . strftime('%Y-%m-%d') . " /"
   endif
+endfunc
+
+func! todo#get_task_prefix()
+  let prefix = strftime('%Y-%m-%d')
+  if g:todo_filter != ''
+    let prefix = prefix . ' ' . g:todo_filter
+  endif
+  return prefix . ' '
 endfunc
 
 " Commands {{{1
