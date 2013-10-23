@@ -15,6 +15,10 @@ if !exists('g:todo_filter')
   let g:todo_filter = ''
 endif
 
+if !exists('g:todo_add_date_prefix')
+  let g:todo_add_date_prefix = 0
+endif
+
 let s:plugin_root = expand("<sfile>:p:h") . '/../'
 let s:todo_bin = s:plugin_root . 'bin/todo'
 
@@ -89,11 +93,26 @@ func! todo#toggle_complete()
 endfunc
 
 func! todo#get_task_prefix()
-  let prefix = strftime('%Y-%m-%d')
-  if g:todo_filter != ''
-    let prefix = prefix . ' ' . g:todo_filter
+  let prefix = ''
+
+  if g:todo_add_date_prefix
+    let prefix = strftime('%Y-%m-%d') . ' '
   endif
-  return prefix . ' '
+
+  if g:todo_filter != ''
+    let prefix = prefix . g:todo_filter . ' '
+  endif
+
+  return prefix
+endfunc
+
+func! todo#toggle_add_date_prefix()
+  let g:todo_add_date_prefix = !g:todo_add_date_prefix
+  if g:todo_add_date_prefix
+    echo "Date Prefix: Enabled"
+  else
+    echo "Date Prefix: Disabled"
+  endif
 endfunc
 
 " Commands {{{1
