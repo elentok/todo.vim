@@ -45,7 +45,7 @@ syntax  match  TodoContext    '@\w\+'                    contains=NONE
 " Other priority colours might be defined by the user
 highlight  default  link  TodoDone       Comment
 highlight  default  link  TodoAttachment Comment
-highlight  default  link  TodoPriorityA  Constant
+highlight  default  link  TodoPriorityA  Function
 highlight  default  link  TodoPriorityB  Statement
 highlight  default  link  TodoPriorityC  Identifier
 highlight  default  link  TodoDate       PreProc
