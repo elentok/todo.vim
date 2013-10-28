@@ -41,6 +41,7 @@ syntax  match  TodoPriorityZ  '^([zZ])\s.\+$'            contains=TodoDate,TodoP
 syntax  match  TodoDate       '\d\{4\}-\d\{2\}-\d\{2\}'  contains=NONE
 syntax  match  TodoProject    '+\w\+'                    contains=NONE
 syntax  match  TodoContext    '@\w\+'                    contains=NONE
+syntax  match  TodoFilter     '^>>>.*$'                  contains=NONE
 
 " Other priority colours might be defined by the user
 highlight  default  link  TodoDone       Comment
@@ -51,5 +52,6 @@ highlight  default  link  TodoPriorityC  Identifier
 highlight  default  link  TodoDate       PreProc
 highlight  default  link  TodoProject    Special
 highlight  default  link  TodoContext    Special
+highlight  default  link  TodoFilter     DiffText
 
 let b:current_syntax = "todo"
